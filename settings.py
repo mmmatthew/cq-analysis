@@ -56,6 +56,8 @@ class Settings(object):
     obs_available = {
         's6_sensor': {
             "data_file": 'data/all_s6_h_us_maxbotix.txt',
+            "location": 's6',
+            "data_type": 'sensor',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's6', 'Depth_above_invert'],
             "calibration": {
@@ -66,6 +68,8 @@ class Settings(object):
         ,
         's5_sensor': {
             "data_file": 'data/all_s5_h_us_maxbotix_2.txt',
+            "location": 's5',
+            "data_type": 'sensor',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's5', 'Depth_above_invert'],
             "calibration": {
@@ -76,6 +80,8 @@ class Settings(object):
         ,
         's3_sensor': {
             "data_file": 'data/all_s3_h_us_maxbotix.txt',
+            "location": 's3',
+            "data_type": 'sensor',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's3', 'Depth_above_invert'],
             "calibration": {
@@ -85,30 +91,36 @@ class Settings(object):
         },
         's6_trend': {
             "data_file": 'data/all_s6_h_us_maxbotix.txt',
+            "location": 's6',
+            "data_type": 'trend',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's6', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman',
+                "obj_fun": 'spearman_zero',
                 "weight": -1  # weight should be positive if obj_fun should be minimized
             }
         }
         ,
         's5_trend': {
             "data_file": 'data/all_s5_h_us_maxbotix_2.txt',
+            "location": 's5',
+            "data_type": 'trend',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's5', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman',
+                "obj_fun": 'spearman_zero',
                 "weight": -1
             }
         }
         ,
         's3_trend': {
             "data_file": 'data/all_s3_h_us_maxbotix.txt',
+            "location": 's3',
+            "data_type": 'trend',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's3', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman',
+                "obj_fun": 'spearman_zero',
                 "weight": -1
             }
         }
