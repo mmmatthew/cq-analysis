@@ -1,23 +1,13 @@
 class Settings(object):
     swmm_model_template = 'swmm_model_template.inp'
-    calibration_event = {
-        'name': 'Exp 20',
-        'start_dt': '2016/10/06 14:06:25',  # start every 5 sec. (00:00:03 is bad). Format is important
-        'end_dt': '2016/10/06 14:21:00'
-    }
+    calibration_event = {}
     # list of periods to be used for validation
-    validation_events = [
-        {
-            "name": 'Exp 20',
-            "start_dt": '2016/10/06 14:06:25',  # start every 5 sec. (00:00:03 is bad). Format is important
-            "end_dt": '2016/10/06 14:21:00'
-        }
-    ]
+    validation_events = []
     sim_reporting_step_sec = 5  # in seconds
     forcing_data_file = 'data/all_p1_q_mid_endress_logi.txt'
     calibration_algorithm = 'sceua'
     calibration_parameters = {
-        's_r': {
+        'r_surf': {
             "display_name": 'Surface roughness',
             'rank': 0,
             'bounds': [0, 0.03]
@@ -27,31 +17,26 @@ class Settings(object):
             'rank': 1,
             'bounds': [0, 0.03]
         },
-        'r_p7': {
-            "display_name": 'Roughness (pipe p7)',
+        'r_px': {
+            "display_name": 'Roughness (other pipes)',
             'rank': 2,
             'bounds': [0, 0.03]
         },
-        'r_px': {
-            "display_name": 'Roughness (other pipes)',
+        'cd_m1': {
+            "display_name": 'Discharge coefficient of manhole m1',
             'rank': 3,
-            'bounds': [0, 0.03]
+            'bounds': [0.3, 0.6]
         },
-        'c_m1': {
-            "display_name": 'Capacity manhole m1',
+        'd_s6': {
+            "display_name": 'Basement floor depth',
             'rank': 4,
-            'bounds': [0, 1]
+            'bounds': [0.01, 0.1]
         },
-        'c_m3': {
-            "display_name": 'Capacity manhole m3',
+        'cd_r4': {
+            "display_name": 'Discharge coefficient of outflow',
             'rank': 5,
             'bounds': [0, 1]
         },
-        'c_w1': {
-            "display_name": 'Capacity weir w1',
-            'rank': 6,
-            'bounds': [0, 10]
-        }
     }
     obs_available = {
         's6_sensor': {
@@ -62,7 +47,7 @@ class Settings(object):
             "swmm_node": ['node', 's6', 'Depth_above_invert'],
             "calibration": {
                 "obj_fun": 'rmse',
-                "weight": 1  # weight should be positive if obj_fun should be minimized
+                "weight": 1  # 1.3.30: weight should be positive if obj_fun should be minimized
             }
         }
         ,
@@ -97,7 +82,7 @@ class Settings(object):
             "swmm_node": ['node', 's6', 'Depth_above_invert'],
             "calibration": {
                 "obj_fun": 'spearman_zero',
-                "weight": -1  # weight should be positive if obj_fun should be minimized
+                "weight": -0.5  # for spotpy 1.4.5: weight should be positive if obj_fun should be maximized
             }
         }
         ,
@@ -109,7 +94,7 @@ class Settings(object):
             "swmm_node": ['node', 's5', 'Depth_above_invert'],
             "calibration": {
                 "obj_fun": 'spearman_zero',
-                "weight": -1
+                "weight": -0.5
             }
         }
         ,
@@ -121,13 +106,12 @@ class Settings(object):
             "swmm_node": ['node', 's3', 'Depth_above_invert'],
             "calibration": {
                 "obj_fun": 'spearman_zero',
-                "weight": -1
+                "weight": -0.5
             }
         }
     }
-    obs_config_calibration = [
-        's5', 's6'
-    ]
+    obs_config_calibration = []
+    # the list of observations that should be used to evaluate performance
     obs_config_validation = [
         's3_sensor',
         's5_sensor',
