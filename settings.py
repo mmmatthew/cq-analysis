@@ -74,6 +74,17 @@ class Settings(object):
                 "weight": 1
             }
         },
+        'c3_sensor': {
+            "data_file": 'data/all_c3_v_radar_nivus.txt',
+            "location": 'c3',
+            "data_type": 'sensor',
+            "scale_factor": 0.001,
+            "swmm_node": ['link', 'c3', 'Flow_velocity'],
+            "calibration": {
+                "obj_fun": 'rmse',
+                "weight": 1
+            }
+        },
         's6_trend': {
             "data_file": 'data/all_s6_h_us_maxbotix.txt',
             "location": 's6',
@@ -104,6 +115,17 @@ class Settings(object):
             "data_type": 'trend',
             "scale_factor": 0.001,
             "swmm_node": ['node', 's3', 'Depth_above_invert'],
+            "calibration": {
+                "obj_fun": 'spearman_zero',
+                "weight": -0.5
+            }
+        },
+        'c3_trend': {
+            "data_file": 'data/all_c3_v_radar_nivus.txt',
+            "location": 'c3',
+            "data_type": 'trend',
+            "scale_factor": 0.001,
+            "swmm_node": ['link', 'c3', 'Flow_velocity'],
             "calibration": {
                 "obj_fun": 'spearman_zero',
                 "weight": -0.5
