@@ -7,35 +7,50 @@ class Settings(object):
     forcing_data_file = 'data/all_p1_q_mid_endress_logi.txt'
     calibration_algorithm = 'sceua'
     calibration_parameters = {
-        'r_surf': {
-            "display_name": 'Surface roughness',
-            'rank': 0,
-            'bounds': [0, 0.03]
-        },
+        # 'r_surf': {
+        #     "display_name": 'Surface roughness',
+        #     'rank': 0,
+        #     'bounds': [0, 0.03]
+        # },
         'r_p3': {
             "display_name": 'Roughness (pipe p3)',
             'rank': 1,
-            'bounds': [0, 0.03]
+            'bounds': [0.009, 0.03]
         },
         'r_px': {
             "display_name": 'Roughness (other pipes)',
             'rank': 2,
-            'bounds': [0, 0.03]
+            'bounds': [0.009, 0.03]
         },
         'cd_m1': {
             "display_name": 'Discharge coefficient of manhole m1',
             'rank': 3,
-            'bounds': [0.3, 0.6]
+            'bounds': [0.48, 0.72]
+        },
+        'cd_m2': {
+            "display_name": 'Discharge coefficient of manhole m2',
+            'rank': 3,
+            'bounds': [0.48, 0.72]
+        },
+        'cd_m3': {
+            "display_name": 'Discharge coefficient of manhole m3',
+            'rank': 3,
+            'bounds': [0.48, 0.72]
+        },
+        'cd_r4': {
+            "display_name": 'Discharge coefficient of outflow',
+            'rank': 5,
+            'bounds': [0.48, 0.72]
+        },
+        'cd_r6': {
+            "display_name": 'Discharge coefficient of outflow to basement',
+            'rank': 5,
+            'bounds': [0.48, 0.72]
         },
         'd_s6': {
             "display_name": 'Basement floor depth',
             'rank': 4,
             'bounds': [0.01, 0.1]
-        },
-        'cd_r4': {
-            "display_name": 'Discharge coefficient of outflow',
-            'rank': 5,
-            'bounds': [0, 1]
         },
     }
     obs_available = {
@@ -78,7 +93,7 @@ class Settings(object):
             "data_file": 'data/all_c3_v_radar_nivus.txt',
             "location": 'c3',
             "data_type": 'sensor',
-            "scale_factor": 0.001,
+            "scale_factor": 1,
             "swmm_node": ['link', 'c3', 'Flow_velocity'],
             "calibration": {
                 "obj_fun": 'rmse',
@@ -124,7 +139,7 @@ class Settings(object):
             "data_file": 'data/all_c3_v_radar_nivus.txt',
             "location": 'c3',
             "data_type": 'trend',
-            "scale_factor": 0.001,
+            "scale_factor": 1,
             "swmm_node": ['link', 'c3', 'Flow_velocity'],
             "calibration": {
                 "obj_fun": 'spearman_zero',
@@ -137,5 +152,6 @@ class Settings(object):
     obs_config_validation = [
         's3_sensor',
         's5_sensor',
-        's6_sensor'
+        's6_sensor',
+        'c3_sensor'
     ]

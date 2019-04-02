@@ -8,12 +8,13 @@ import settings
 overwrite: bool = False
 
 event_identifiers = [20, 21, 22, 23, 24]
+# locations_available = ['c3']
 locations_available = ['s3', 's5', 's6', 'c3']
 data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/190326/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/190401_test/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv')
 if os.path.isfile(log_file) and overwrite:
@@ -63,7 +64,7 @@ for event_number in event_identifiers:
                         'count_sensor': types.count('sensor'),
                         'count_trend': types.count('trend')
                     })
-                runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
+                runner.run(repetitions=2000, kstop=8, ngs=5, pcento=0.5)
                 # delete settings and runner
                 del s
                 del runner
