@@ -29,27 +29,27 @@ class Settings(object):
         },
         'cd_m2': {
             "display_name": 'Discharge coefficient of manhole m2',
-            'rank': 3,
+            'rank': 4,
             'bounds': [0.48, 0.72]
         },
         'cd_m3': {
             "display_name": 'Discharge coefficient of manhole m3',
-            'rank': 3,
+            'rank': 5,
             'bounds': [0.48, 0.72]
         },
         'cd_r4': {
             "display_name": 'Discharge coefficient of outflow',
-            'rank': 5,
+            'rank': 6,
             'bounds': [0.48, 0.72]
         },
         'cd_r6': {
             "display_name": 'Discharge coefficient of outflow to basement',
-            'rank': 5,
+            'rank': 7,
             'bounds': [0.48, 0.72]
         },
         'd_s6': {
             "display_name": 'Basement floor depth',
-            'rank': 4,
+            'rank': 8,
             'bounds': [0.01, 0.1]
         },
     }
