@@ -12,6 +12,11 @@ class Settings(object):
         #     'rank': 0,
         #     'bounds': [0, 0.03]
         # },
+        'h_w1': {
+            "display_name": 'Roughness (pipe p3)',
+            'rank': 1,
+            'bounds': [0.4, 0.6]
+        },
         'r_p3': {
             "display_name": 'Roughness (pipe p3)',
             'rank': 1,
