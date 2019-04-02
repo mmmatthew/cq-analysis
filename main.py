@@ -14,7 +14,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/190401_test/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/190402/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv')
 if os.path.isfile(log_file) and overwrite:
@@ -23,7 +23,7 @@ if os.path.isfile(log_file) and overwrite:
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
 for event_number in event_identifiers:
-    for source_count in [4, 3, 2, 1]:
+    for source_count in [4, 3]:
         for locations in list(itertools.combinations(locations_available, source_count)):
             for types in itertools.product(data_types, repeat=source_count):
                 obses = []
@@ -64,7 +64,7 @@ for event_number in event_identifiers:
                         'count_sensor': types.count('sensor'),
                         'count_trend': types.count('trend')
                     })
-                runner.run(repetitions=2000, kstop=8, ngs=5, pcento=0.5)
+                runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
                 # delete settings and runner
                 del s
                 del runner
