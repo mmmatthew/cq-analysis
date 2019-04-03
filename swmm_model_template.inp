@@ -36,7 +36,7 @@ HEAD_TOLERANCE       0.0015
 SYS_FLOW_TOL         5
 LAT_FLOW_TOL         5
 MINIMUM_STEP         0.5
-THREADS              4
+THREADS              8
 
 [EVAPORATION]
 ;;Data Source    Parameters
@@ -106,7 +106,7 @@ r1               s3               29               BOTTOM       0          $cd_m
 [WEIRS]
 ;;Name           From Node        To Node          Type         CrestHt    Qcoeff     Gated    EndCon   EndCoeff   Surcharge  RoadWidth  RoadSurf
 ;;-------------- ---------------- ---------------- ------------ ---------- ---------- -------- -------- ---------- ---------- ---------- ----------
-w1               s3               virt2            TRANSVERSE   $h_w1      1.84       NO       0        0          YES
+w1               s3               virt2            TRANSVERSE   $h_w1      $cd_w1       NO       0        0          YES
 w3               v6               s5               TRANSVERSE   0          1.84       NO       0        0          YES
 w4               s2               virtual1         TRANSVERSE   2.73       1.84       NO       0        0          YES
 w2               virt3            s4               TRANSVERSE   0          1.84       NO       0        0          YES
@@ -144,11 +144,6 @@ s2               FLOW             forcingData      FLOW     1.0      1.0
 [CURVES]
 ;;Name           Type       X-Value    Y-Value
 ;;-------------- ---------- ---------- ----------
-;Pond behind dam
-Pond             Storage    0          14.4
-Pond                        0.41       27.72
-Pond                        0.9        40.29
-;
 storage_s5       Storage    0          5.55
 storage_s5                  0.12       5.205
 storage_s5                  0.234      5.55
@@ -157,9 +152,12 @@ storage_s5                  0.47       6.225
 storage_s3       Storage    0          1
 storage_s3                  0.08       9.2
 storage_s3                  0.26       12.84
+storage_s3                  0.51	   44.9
+storage_s3                  0.88	   65.06
+
 ;
 storage_s6       Storage    0          0
-storage_s6                  $d_s6      43.26
+storage_s6                  0.03       43.26
 
 [TIMESERIES]
 ;;Name           Date       Time       Value

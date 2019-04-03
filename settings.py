@@ -13,8 +13,8 @@ class Settings(object):
         #     'bounds': [0, 0.03]
         # },
         'h_w1': {
-            "display_name": 'Roughness (pipe p3)',
-            'rank': 1,
+            "display_name": 'Height of weir w1',
+            'rank': 0,
             'bounds': [0.4, 0.6]
         },
         'r_p3': {
@@ -25,7 +25,7 @@ class Settings(object):
         'r_px': {
             "display_name": 'Roughness (other pipes)',
             'rank': 2,
-            'bounds': [0.009, 0.03]
+            'bounds': [0.005, 0.02]
         },
         'cd_m1': {
             "display_name": 'Discharge coefficient of manhole m1',
@@ -35,28 +35,33 @@ class Settings(object):
         'cd_m2': {
             "display_name": 'Discharge coefficient of manhole m2',
             'rank': 4,
-            'bounds': [0.48, 0.72]
+            'bounds': [0.42, 0.78]
         },
         'cd_m3': {
             "display_name": 'Discharge coefficient of manhole m3',
             'rank': 5,
-            'bounds': [0.48, 0.72]
+            'bounds': [0.42, 0.78]
         },
         'cd_r4': {
             "display_name": 'Discharge coefficient of outflow',
             'rank': 6,
-            'bounds': [0.48, 0.72]
+            'bounds': [0.36, 0.72]
         },
         'cd_r6': {
             "display_name": 'Discharge coefficient of outflow to basement',
             'rank': 7,
             'bounds': [0.48, 0.72]
         },
-        'd_s6': {
-            "display_name": 'Basement floor depth',
+        'cd_w1': {
+            "display_name": 'Discharge coefficient of weir w1',
             'rank': 8,
-            'bounds': [0.01, 0.1]
+            'bounds': [1.1, 2.1]
         },
+        # 'id_s2': {
+        #     "display_name": 'Initial depth in S2',
+        #     'rank': 0,
+        #     'bounds': [0, 2.7]
+        # },
     }
     obs_available = {
         's6_sensor': {
@@ -157,6 +162,5 @@ class Settings(object):
     obs_config_validation = [
         's3_sensor',
         's5_sensor',
-        's6_sensor',
-        'c3_sensor'
+        's6_sensor'
     ]
