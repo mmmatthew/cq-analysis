@@ -5,7 +5,7 @@ import gc
 import helpers as h
 import settings
 
-overwrite: bool = False
+overwrite: bool = True
 
 # event_identifiers = [20, 21]
 event_identifiers = [20, 21, 22, 23, 24]
@@ -23,7 +23,7 @@ if os.path.isfile(log_file) and overwrite:
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for event_number in event_identifiers:
+for event_number in event_identifiers[0:2]:
     for source_count in [4, 3, 2, 1]:
         for locations in list(itertools.combinations(locations_available, source_count)):
             for types in itertools.product(data_types, repeat=source_count):

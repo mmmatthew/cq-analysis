@@ -136,6 +136,11 @@ w3               RECT_OPEN    1                2.5        0          0
 w4               RECT_OPEN    1                3.64       0          0
 w2               RECT_OPEN    1                1          0          0
 
+[LOSSES]
+;;Link           Kentry     Kexit      Kavg       Flap Gate  Seepage
+;;-------------- ---------- ---------- ---------- ---------- ----------
+c1               0          0          0          NO         $seepage
+
 [INFLOWS]
 ;;Node           Constituent      Time Series      Type     Mfactor  Sfactor  Baseline Pattern
 ;;-------------- ---------------- ---------------- -------- -------- -------- -------- --------
@@ -152,9 +157,6 @@ storage_s5                  0.47       6.225
 storage_s3       Storage    0          1
 storage_s3                  0.08       9.2
 storage_s3                  0.26       12.84
-storage_s3                  0.51	   44.9
-storage_s3                  0.88	   65.06
-
 ;
 storage_s6       Storage    0          0
 storage_s6                  0.03       43.26

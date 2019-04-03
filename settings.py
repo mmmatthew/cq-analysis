@@ -57,11 +57,11 @@ class Settings(object):
             'rank': 8,
             'bounds': [1.1, 2.1]
         },
-        # 'id_s2': {
-        #     "display_name": 'Initial depth in S2',
-        #     'rank': 0,
-        #     'bounds': [0, 2.7]
-        # },
+        'seepage': {
+            "display_name": 'Seepage loss from dam (mm/h)',
+            'rank': 9,
+            'bounds': [0, 100]
+        },
     }
     obs_available = {
         's6_sensor': {
