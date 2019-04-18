@@ -1,5 +1,5 @@
 class Settings(object):
-    swmm_executable = "E:/Software/EPA SWMM 5.1/swmm5.exe"
+    swmm_executable = "E:/Software/EPA SWMM 5.1.013/swmm5.exe"
     swmm_model_template = 'swmm_model_template.inp'
     calibration_event = {}
     # list of periods to be used for validation

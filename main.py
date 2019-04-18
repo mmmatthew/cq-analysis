@@ -1,14 +1,20 @@
 from swmm_calibration.classes import experiment_runner
 import itertools
 import os
+import sys
 import gc
 import helpers as h
 import settings
 
 overwrite = False
+event_identifiers = [20, 21, 22, 23, 24]
+if len(sys.argv) > 0:
+    calibrate_events = [int(sys.argv[1])]
+else:
+    calibrate_events = event_identifiers
+print('calibrating with {}'.format(calibrate_events))
 
 # event_identifiers = [20, 21]
-event_identifiers = [20, 21, 22, 23, 24]
 # locations_available = ['c3']
 locations_available = ['s3', 's5', 's6']
 data_types = ['trend', 'sensor']
@@ -24,7 +30,7 @@ if os.path.isfile(log_file) and overwrite:
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for event_number in event_identifiers:
+for event_number in calibrate_events:
     for source_count in [4, 3, 2, 1]:
         for locations in list(itertools.combinations(locations_available, source_count)):
             for types in itertools.product(data_types, repeat=source_count):
