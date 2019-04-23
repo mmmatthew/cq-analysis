@@ -8,8 +8,10 @@ import settings
 
 overwrite = False
 event_identifiers = [20, 21, 22, 23, 24]
-if len(sys.argv) > 0:
-    calibrate_events = [int(sys.argv[1])]
+
+# Find out which events to calibrate
+if len(sys.argv) > 1:
+    calibrate_events = sys.argv[1:]
 else:
     calibrate_events = event_identifiers
 print('calibrating with {}'.format(calibrate_events))
@@ -21,9 +23,9 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/with_iterations/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/water_depth/'
 # define log file
-log_file = os.path.join(workdir, 'results.csv')
+log_file = os.path.join(workdir, 'results_{}.csv'.format(calibrate_events))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
@@ -31,8 +33,13 @@ if os.path.isfile(log_file) and overwrite:
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
 for event_number in calibrate_events:
-    for source_count in [4, 3, 2, 1]:
+    # make sure it is an integer
+    event_number = int(event_number)
+    # use different number of locations
+    for source_count in list(range(1, len(locations_available))):
+        # use different combinations of locations
         for locations in list(itertools.combinations(locations_available, source_count)):
+            # use different types of data at each location
             for types in itertools.product(data_types, repeat=source_count):
                 for repetition in range(10):
                     obses = []

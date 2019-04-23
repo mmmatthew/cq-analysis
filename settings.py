@@ -1,11 +1,11 @@
 class Settings(object):
-    swmm_executable = "E:/Software/EPA SWMM 5.1.013/swmm5.exe"
+    swmm_executable = "C:/Program Files (x86)/EPA SWMM 5.1/swmm5.exe"
     swmm_model_template = 'swmm_model_template.inp'
     calibration_event = {}
     # list of periods to be used for validation
     validation_events = []
     sim_reporting_step_sec = 5  # in seconds
-    forcing_data_file = 'data/all_p1_q_mid_endress_logi.txt'
+    forcing_data_file = 'data/all_p1_q_mid_endress_logi_no_outliers.txt'
     calibration_algorithm = 'sceua'
     calibration_parameters = {
         # 'r_surf': {
@@ -112,7 +112,7 @@ class Settings(object):
             }
         },
         's6_trend': {
-            "data_file": 'data/all_s6_h_us_maxbotix.txt',
+            "data_file": 'data/all_s6_h_us_maxbotix_normalized.txt',
             "location": 's6',
             "data_type": 'trend',
             "scale_factor": 0.001,
@@ -124,7 +124,7 @@ class Settings(object):
         }
         ,
         's5_trend': {
-            "data_file": 'data/all_s5_h_us_maxbotix_2.txt',
+            "data_file": 'data/all_s5_h_us_maxbotix_2_normalized.txt',
             "location": 's5',
             "data_type": 'trend',
             "scale_factor": 0.001,
@@ -136,7 +136,7 @@ class Settings(object):
         }
         ,
         's3_trend': {
-            "data_file": 'data/all_s3_h_us_maxbotix.txt',
+            "data_file": 'data/all_s3_h_us_maxbotix_normalized.txt',
             "location": 's3',
             "data_type": 'trend',
             "scale_factor": 0.001,
