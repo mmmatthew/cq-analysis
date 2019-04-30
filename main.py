@@ -6,6 +6,8 @@ import gc
 import helpers as h
 import settings
 
+# Analyze calibration performance for a sofi signal
+
 overwrite = False
 event_identifiers = [20, 21, 22, 23, 24]
 
@@ -36,7 +38,7 @@ for event_number in calibrate_events:
     # make sure it is an integer
     event_number = int(event_number)
     # use different number of locations
-    for source_count in list(range(1, len(locations_available))):
+    for source_count in list(range(1, len(locations_available)+1)):
         # use different combinations of locations
         for locations in list(itertools.combinations(locations_available, source_count)):
             # use different types of data at each location

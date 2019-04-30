@@ -146,6 +146,17 @@ class Settings(object):
                 "weight": -0.5
             }
         },
+        's3_sofi': {
+            "data_file": 'data/161006A_s3_sofi.txt',
+            "location": 's3',
+            "data_type": 'trend',
+            "scale_factor": 1,
+            "swmm_node": ['node', 's3', 'Depth_above_invert'],
+            "calibration": {
+                "obj_fun": 'spearman_zero',
+                "weight": -0.5
+            }
+        },
         'c3_trend': {
             "data_file": 'data/all_c3_v_radar_nivus.txt',
             "location": 'c3',
