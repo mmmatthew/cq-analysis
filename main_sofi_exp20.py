@@ -14,7 +14,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/sofi/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/sofi_hybrid/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv')
 if os.path.isfile(log_file) and overwrite:
@@ -23,14 +23,14 @@ if os.path.isfile(log_file) and overwrite:
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for repetition in range(10):
-    obses = ['s3_sofi', 's5_sensor']
-    event_number = 20
-    source_count = 2
-    types = ['sofi', 'sensor']
+for quality in [.7, .8, .9]:
 
-    print('#  Calibrating with Experiment {} using {}: iteration {}'
-          .format(event_number, '-'.join(obses), repetition))
+    sofi_obs_name = 's3_sofi_{}'.format(quality)
+
+    obses = [sofi_obs_name]
+    event_number = 20
+    source_count = len(obses)
+    types = ['sofi']
 
     # define calibration event
     calibration_event = events[event_number]
@@ -38,38 +38,54 @@ for repetition in range(10):
     validation_event_numbers = [i for i in event_identifiers if i != event_number]
     validation_events = [events[i] for i in validation_event_numbers]
 
-    # define directory
-    exp_dir = os.path.join(workdir, '-'.join(obses), str(event_number), str(repetition))
+    for repetition in range(10):
+        print('#  Calibrating with Experiment {} using {}: iteration {}'
+              .format(event_number, '-'.join(obses), repetition))
+        # define directory
+        exp_dir = os.path.join(workdir, '-'.join(obses), str(event_number), str(repetition))
 
-    # check if processing already performed for directory
-    if os.path.isfile(os.path.join(exp_dir, 'calibration_chain.png')) and not overwrite:
-        print('Processing already performed')
-        continue
+        # check if processing already performed for directory
+        if os.path.isfile(os.path.join(exp_dir, 'calibration_chain.png')) and not overwrite:
+            print('Processing already performed')
+            continue
 
-    # create new settingss
-    s = settings.Settings
+        # create new settings
+        s = settings.Settings
 
-    # adapt settings
-    s.calibration_event = calibration_event
-    s.validation_events = validation_events
+        # create observation for specific sofi trend quality
+        s.obs_available[sofi_obs_name] = {
+            "data_file": './data/hybrid/sofi_hybrid_{}.txt'.format(quality),
+            "location": 's3',
+            "data_type": 'trend',
+            "scale_factor": 1,
+            "swmm_node": ['node', 's3', 'Depth_above_invert'],
+            "calibration": {
+                "obj_fun": 'spearman_zero',
+                "weight": -0.5
+            }
+        }
 
-    # choose observations to use for calibration and validation
-    s.obs_config_calibration = obses
+        # adapt settings
+        s.calibration_event = calibration_event
+        s.validation_events = validation_events
 
-    # create experiment runner
-    runner = experiment_runner.ExperimentRunner(
-        data_directory=exp_dir, output_file=log_file, settings=s, experiment_metadata={
-            'event_cal': event_number,
-            'observations': '-'.join(obses),
-            'source_count': source_count,
-            'count_sensor': types.count('sensor'),
-            'count_trend': types.count('trend') + types.count('sofi'),
-            'repetition': repetition
-        }, evaluation_count=1
-    )
-    runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
-    # delete settings and runner
-    del s
-    del runner
-    # collect garbage
-    gc.collect()
+        # choose observations to use for calibration and validation
+        s.obs_config_calibration = obses
+
+        # create experiment runner
+        runner = experiment_runner.ExperimentRunner(
+            data_directory=exp_dir, output_file=log_file, settings=s, experiment_metadata={
+                'event_cal': event_number,
+                'observations': '-'.join(obses),
+                'source_count': source_count,
+                'count_sensor': types.count('sensor'),
+                'count_trend': types.count('trend') + types.count('sofi'),
+                'repetition': repetition
+            }, evaluation_count=1
+        )
+        runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
+        # delete settings and runner
+        del s
+        del runner
+        # collect garbage
+        gc.collect()
