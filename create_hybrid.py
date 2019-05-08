@@ -52,7 +52,7 @@ def find_combination(trend_path, sofi_path, obj_correlation):
 trend_path_real = './data/all_s3_h_us_maxbotix_normalized.txt'
 sofi_path_real = './data/161006A_s3_sofi.txt'
 template_out_path = './data/hybrid/sofi_hybrid_{}.txt'
-obj_correlations = [.7, .8, .9]
+obj_correlations = [.6]
 
 
 for objective_correlation in obj_correlations:

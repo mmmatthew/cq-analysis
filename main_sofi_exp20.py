@@ -23,11 +23,11 @@ if os.path.isfile(log_file) and overwrite:
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for quality in [.7, .8, .9]:
+for quality in [.7, .8, .9, .6]:
 
     sofi_obs_name = 's3_sofi_{}'.format(quality)
 
-    obses = [sofi_obs_name]
+    obses = [sofi_obs_name, 's5_sensor']
     event_number = 20
     source_count = len(obses)
     types = ['sofi']
