@@ -14,23 +14,23 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/sofi_hybrid/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/sofi_hybrid_CliBU019/'
 # define log file
-log_file = os.path.join(workdir, 'results.csv')
+log_file = os.path.join(workdir, 'results_with_s5_sensor.csv')
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for quality in [.7, .8, .9, .6]:
+for quality in [.6]:
 
     sofi_obs_name = 's3_sofi_{}'.format(quality)
 
     obses = [sofi_obs_name, 's5_sensor']
     event_number = 20
     source_count = len(obses)
-    types = ['sofi']
+    types = ['sofi', 'sensor']
 
     # define calibration event
     calibration_event = events[event_number]

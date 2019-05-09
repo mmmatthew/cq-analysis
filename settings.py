@@ -1,5 +1,8 @@
+from env import *
+
+
 class Settings(object):
-    swmm_executable = "C:/Program Files (x86)/EPA SWMM 5.1/swmm5.exe"
+    swmm_executable = SWMM_EXECUTABLE
     swmm_model_template = 'swmm_model_template.inp'
     calibration_event = {}
     # list of periods to be used for validation
