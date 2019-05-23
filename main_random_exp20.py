@@ -14,7 +14,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/sofi_hybrid/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/gaussiantrend/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv')
 if os.path.isfile(log_file) and overwrite:
@@ -26,12 +26,12 @@ events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadat
 for repetition in range(10):
     for quality in [.6, .7, .8, .9]:
 
-        sofi_obs_name = 's3_sofi_{}'.format(quality)
+        sofi_obs_name = 's3_gaussiantrend_{}'.format(quality)
 
         obses = [sofi_obs_name]
         event_number = 20
         source_count = len(obses)
-        types = ['sofi', 'sensor']
+        types = ['gaussiantrend', 'sensor']
 
         # define calibration event
         calibration_event = events[event_number]
@@ -54,7 +54,7 @@ for repetition in range(10):
 
         # create observation for specific sofi trend quality
         s.obs_available[sofi_obs_name] = {
-            "data_file": './data/hybrid/sofi_hybrid_{}.txt'.format(quality),
+            "data_file": './data/hybrid/random_hybrid_{}.txt'.format(quality),
             "location": 's3',
             "data_type": 'trend',
             "scale_factor": 1,
@@ -79,7 +79,7 @@ for repetition in range(10):
                 'observations': '-'.join(obses),
                 'source_count': source_count,
                 'count_sensor': types.count('sensor'),
-                'count_trend': types.count('trend') + types.count('sofi'),
+                'count_trend': types.count('trend') + types.count('gaussiantrend'),
                 'repetition': repetition
             }, evaluation_count=1
         )

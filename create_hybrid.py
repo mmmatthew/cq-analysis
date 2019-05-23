@@ -51,13 +51,23 @@ def find_combination(trend_path, sofi_path, obj_correlation):
 
 trend_path_real = './data/all_s3_h_us_maxbotix_normalized.txt'
 sofi_path_real = './data/161006A_s3_sofi.txt'
-template_out_path = './data/hybrid/sofi_hybrid_{}.txt'
-obj_correlations = [.6]
+random_path = './data/random_gaussian_E20.txt'
+template_out_real_path = './data/hybrid/sofi_hybrid_{}.txt'
+template_out_random_path = './data/hybrid/random_hybrid_{}.txt'
+obj_correlations = [.6, .7, .8, .9]
 
+# Create noisy data with real trend
+# for objective_correlation in obj_correlations:
+#     data = find_combination(trend_path_real, sofi_path_real, objective_correlation)
+#     # fig = data.plot(title='{}% correlation'.format(objective_correlation))
+#     # plt.show()
+#     # save data
+#     data['value'].to_csv(template_out_real_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
 
+#Create noisy data with random noise
 for objective_correlation in obj_correlations:
-    data = find_combination(trend_path_real, sofi_path_real, objective_correlation)
+    data = find_combination(trend_path_real, random_path, objective_correlation)
     # fig = data.plot(title='{}% correlation'.format(objective_correlation))
     # plt.show()
     # save data
-    data['value'].to_csv(template_out_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
+    data['value'].to_csv(template_out_random_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')

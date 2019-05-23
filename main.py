@@ -25,25 +25,25 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/water_depth/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/sofi/'
 # define log file
-log_file = os.path.join(workdir, 'results_{}.csv'.format(calibrate_events))
+log_file = os.path.join(workdir, 'results.csv'.format(calibrate_events))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
 
 events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
-for event_number in calibrate_events:
-    # make sure it is an integer
-    event_number = int(event_number)
-    # use different number of locations
-    for source_count in list(range(1, len(locations_available)+1)):
-        # use different combinations of locations
-        for locations in list(itertools.combinations(locations_available, source_count)):
-            # use different types of data at each location
-            for types in itertools.product(data_types, repeat=source_count):
-                for repetition in range(10):
+for repetition in range(10):
+    for event_number in calibrate_events:
+        # make sure it is an integer
+        event_number = int(event_number)
+        # use different number of locations
+        for source_count in list(range(1, len(locations_available)+1)):
+            # use different combinations of locations
+            for locations in list(itertools.combinations(locations_available, source_count)):
+                # use different types of data at each location
+                for types in itertools.product(data_types, repeat=source_count):
                     obses = []
                     for location, type in zip(locations, types):
                         obses.append(location + '_' + type)
