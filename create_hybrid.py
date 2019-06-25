@@ -51,9 +51,9 @@ def find_combination(trend_path, sofi_path, obj_correlation):
 
 trend_path_real = './data/all_s3_h_us_maxbotix_normalized.txt'
 sofi_path_real = './data/161006A_s3_sofi.txt'
-random_path = './data/random_gaussian_E20.txt'
+random_path = './data/hybrid/random_gaussian_E20.txt'
 template_out_real_path = './data/hybrid/sofi_hybrid_{}.txt'
-template_out_random_path = './data/hybrid/random_hybrid_{}.txt'
+template_out_random_path = './data/hybrid/gaussian_hybrid_{}.txt'
 obj_correlations = [.6, .7, .8, .9]
 
 # Create noisy data with real trend

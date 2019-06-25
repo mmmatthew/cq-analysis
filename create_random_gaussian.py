@@ -7,7 +7,7 @@ outfile = './data/hybrid/random_gaussian_E20.txt'
 
 # Start and end date
 date_start = datetime(2016, 10, 6, 14)
-date_end = datetime(2016, 10, 6, 15)
+date_end = datetime(2016, 10, 6, 18)
 
 # create date range
 time = pd.date_range(date_start, date_end, freq='S', name='datetime')
