@@ -28,64 +28,63 @@ for repetition in range(10):
 
         sofi_obs_name = 's3_gaussiantrend_{}'.format(quality)
 
-        obses = [sofi_obs_name, 's5_sensor']
-        for event_number in [20, 21, 22, 23, 24]:
-            source_count = len(obses)
-            types = ['gaussiantrend', 'sensor']
+        for obses, types in zip([[sofi_obs_name, 's5_sensor'], [sofi_obs_name]], [['gaussiantrend', 'sensor'], ['gaussiantrend']]):
+            for event_number in [20, 21, 22, 23, 24]:
+                source_count = len(obses)
 
-            # define calibration event
-            calibration_event = events[event_number]
-            # find other events
-            validation_event_numbers = [i for i in event_identifiers if i != event_number]
-            validation_events = [events[i] for i in validation_event_numbers]
+                # define calibration event
+                calibration_event = events[event_number]
+                # find other events
+                validation_event_numbers = [i for i in event_identifiers if i != event_number]
+                validation_events = [events[i] for i in validation_event_numbers]
 
-            print('#  Calibrating with Experiment {} using {}: iteration {}'
-                  .format(event_number, '-'.join(obses), repetition))
-            # define directory
-            exp_dir = os.path.join(workdir, '-'.join(obses), str(event_number), str(repetition))
+                print('#  Calibrating with Experiment {} using {}: iteration {}'
+                      .format(event_number, '-'.join(obses), repetition))
+                # define directory
+                exp_dir = os.path.join(workdir, '-'.join(obses), str(event_number), str(repetition))
 
-            # check if processing already performed for directory
-            if os.path.isfile(os.path.join(exp_dir, 'calibration_chain.png')) and not overwrite:
-                print('Processing already performed')
-                continue
+                # check if processing already performed for directory
+                if os.path.isfile(os.path.join(exp_dir, 'calibration_chain.png')) and not overwrite:
+                    print('Processing already performed')
+                    continue
 
-            # create new settings
-            s = settings.Settings
+                # create new settings
+                s = settings.Settings
 
-            # create observation for specific sofi trend quality
-            s.obs_available[sofi_obs_name] = {
-                "data_file": './data/hybrid/gaussian_hybrid_{}.txt'.format(quality),
-                "location": 's3',
-                "data_type": 'trend',
-                "scale_factor": 1,
-                "swmm_node": ['node', 's3', 'Depth_above_invert'],
-                "calibration": {
-                    "obj_fun": 'spearman_zero',
-                    "weight": -0.5
+                # create observation for specific sofi trend quality
+                s.obs_available[sofi_obs_name] = {
+                    "data_file": './data/hybrid/gaussian_hybrid_{}.txt'.format(quality),
+                    "location": 's3',
+                    "data_type": 'trend',
+                    "scale_factor": 1,
+                    "swmm_node": ['node', 's3', 'Depth_above_invert'],
+                    "calibration": {
+                        "obj_fun": 'spearman_zero',
+                        "weight": -0.5
+                    }
                 }
-            }
 
-            # adapt settings
-            s.calibration_event = calibration_event
-            s.validation_events = validation_events
+                # adapt settings
+                s.calibration_event = calibration_event
+                s.validation_events = validation_events
 
-            # choose observations to use for calibration and validation
-            s.obs_config_calibration = obses
+                # choose observations to use for calibration and validation
+                s.obs_config_calibration = obses
 
-            # create experiment runner
-            runner = experiment_runner.ExperimentRunner(
-                data_directory=exp_dir, output_file=log_file, settings=s, experiment_metadata={
-                    'event_cal': event_number,
-                    'observations': '-'.join(obses),
-                    'source_count': source_count,
-                    'count_sensor': types.count('sensor'),
-                    'count_trend': types.count('trend') + types.count('gaussiantrend'),
-                    'repetition': repetition
-                }, evaluation_count=1
-            )
-            runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
-            # delete settings and runner
-            del s
-            del runner
-            # collect garbage
-            gc.collect()
+                # create experiment runner
+                runner = experiment_runner.ExperimentRunner(
+                    data_directory=exp_dir, output_file=log_file, settings=s, experiment_metadata={
+                        'event_cal': event_number,
+                        'observations': '-'.join(obses),
+                        'source_count': source_count,
+                        'count_sensor': types.count('sensor'),
+                        'count_trend': types.count('trend') + types.count('gaussiantrend'),
+                        'repetition': repetition
+                    }, evaluation_count=1
+                )
+                runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
+                # delete settings and runner
+                del s
+                del runner
+                # collect garbage
+                gc.collect()
