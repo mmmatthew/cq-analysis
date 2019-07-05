@@ -16,7 +16,7 @@ def get_events(identifiers, metadata_path, initial_condition_path):
     events_formatted = {}
 
     for idx in identifiers:
-        event = {'name': 'Event {}'.format(idx),
+        event = {'name': '{}'.format(idx),
                  'start_dt': date_transform(events_df[events_df['id'] == idx]['start_datetime'].item(),
                                             date_format_in,
                                             date_format_out),
