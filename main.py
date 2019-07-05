@@ -25,7 +25,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/ideal_sofi_single_process/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/new_model/ideal_sofi/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv'.format(calibrate_events))
 if os.path.isfile(log_file) and overwrite:

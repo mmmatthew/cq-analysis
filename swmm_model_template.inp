@@ -59,6 +59,8 @@ virt3            419.90     0          0          10         0
 28               419.69     0          0          10         0
 29               419.68     0          0          10         0
 v4               417.94     0          0          10         0
+v8               417.94     0          0          10         0
+1                417.3316   0          $id_1      10         0
 
 [OUTFALLS]
 ;;Name           Elevation  Type       Stage Data       Gated    Route To
@@ -92,6 +94,8 @@ c3               s4               28               4.63       0.016      0      
 c4               28               v6               11         0.016      0          0          0          0
 p2               29               m1               1.44       $r_px      0          1.34       0          0
 p6               v4               v7               2.35       $r_px      0          0          0          0
+1                m2               1                15.65      $r_px      0          0          0          0
+2                v8               4                20.55      $r_px      0          0.68       0          0
 
 [ORIFICES]
 ;;Name           From Node        To Node          Type         Offset     Qcoeff     Gated    CloseTime
@@ -102,6 +106,7 @@ r4               s5               v7               SIDE         0          $cd_r
 r3               s4               m2               BOTTOM       0          $cd_m2     NO       0
 r2               s3               m1               BOTTOM       0          $cd_m1     NO       0
 r1               s3               29               BOTTOM       0          $cd_m1     NO       0
+v2               1                9                SIDE         0          $cd_v2     NO       0
 
 [WEIRS]
 ;;Name           From Node        To Node          Type         CrestHt    Qcoeff     Gated    EndCon   EndCoeff   Surcharge  RoadWidth  RoadSurf
@@ -125,12 +130,15 @@ c3               RECT_OPEN    1                1.06       0          0          
 c4               RECT_OPEN    1                1.5        2          0          1
 p2               CIRCULAR     0.15             0          0          0          1
 p6               CIRCULAR     0.234            0          0          0          1
+1                CIRCULAR     0.184            0          0          0          1
+2                CIRCULAR     0.3272           0          0          0          1
 r5               CIRCULAR     .6               0          0          0
 r6               CIRCULAR     0.234            0          0          0
 r4               CIRCULAR     0.234            0          0          0
 r3               CIRCULAR     0.8              0          0          0
 r2               RECT_CLOSED  .6               .6         0          0
 r1               RECT_CLOSED  0.2              2          0          0
+v2               CIRCULAR     .5               0          0          0
 w1               RECT_OPEN    1                0.78       0          0
 w3               RECT_OPEN    1                2.5        0          0
 w4               RECT_OPEN    1                3.64       0          0
@@ -195,6 +203,8 @@ virt3            618616.455         231488.609
 28               618610.978         231492.437
 29               618611.743         231484.103
 v4               618612.214         231504.157
+v8               618604.292         231491.843
+1                618610.302         231498.513
 5                618584.420         231504.676
 s3               618610.917         231485.016
 s6               618623.378         231495.780
@@ -215,6 +225,11 @@ c4               618610.035         231492.908
 c4               618609.623         231493.703
 c4               618609.446         231495.441
 c4               618610.919         231498.120
+1                618609.546         231495.084
+1                618609.295         231495.776
+1                618609.326         231496.468
+2                618610.522         231502.132
+2                618611.875         231502.541
 w2               618617.662         231489.227
 
 

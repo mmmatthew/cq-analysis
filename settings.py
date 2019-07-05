@@ -1,3 +1,8 @@
+import os
+
+if not os.path.isfile('env.py'):
+    print('Error: create env.py file with SWMM executable location. Exiting application.')
+    quit(1)
 from env import *
 
 
@@ -49,7 +54,7 @@ class Settings(object):
         'cd_r4': {
             "display_name": 'Discharge coefficient of outflow',
             'rank': 6,
-            'bounds': [0.36, 0.72]
+            'bounds': [0.1, 0.72]
         },
         'cd_r6': {
             "display_name": 'Discharge coefficient of outflow to basement',
@@ -61,9 +66,14 @@ class Settings(object):
             'rank': 8,
             'bounds': [1.1, 2.1]
         },
+        'cd_v2': {
+            "display_name": 'Discharge coefficient of valve v2',
+            'rank': 9,
+            'bounds': [0, 1]
+        },
         'seepage': {
             "display_name": 'Seepage loss from dam (mm/h)',
-            'rank': 9,
+            'rank': 10,
             'bounds': [0, 100]
         },
     }
