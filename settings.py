@@ -69,7 +69,7 @@ class Settings(object):
         'cd_v2': {
             "display_name": 'Discharge coefficient of valve v2',
             'rank': 9,
-            'bounds': [0, 0.001]
+            'bounds': [0.01, 0.5]
         },
         'seepage': {
             "display_name": 'Seepage loss from dam (mm/h)',

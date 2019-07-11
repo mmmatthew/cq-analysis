@@ -11,7 +11,20 @@ def get_events(identifiers, metadata_path, initial_condition_path):
     date_format_in = '%d.%m.%y %H:%M'
     date_format_out = '%Y/%m/%d %H:%M:%S'
 
-    initial_conditions = pd.read_csv(initial_condition_path, index_col=0).to_dict('index')
+    initial_conditions = pd.read_csv(initial_condition_path, index_col=0)
+
+    # use rules to set certain initial conditions
+    initial_conditions['id_1'] = initial_conditions.id_m2 + 0.21
+    initial_conditions['id_v9'] = initial_conditions.id_s5
+    initial_conditions['id_4'] = initial_conditions.id_s5 + 0.68
+    initial_conditions['id_9'] = initial_conditions.id_s5 + 0.68
+    initial_conditions['id_v8'] = initial_conditions.id_s5
+    initial_conditions['id_v7'] = initial_conditions.id_s5
+    initial_conditions['id_v4'] = initial_conditions.id_s5
+    initial_conditions['id_m3'] = initial_conditions.id_s5 + 0.5
+
+    # transform to dict
+    initial_conditions = initial_conditions.to_dict('index')
 
     events_formatted = {}
 
