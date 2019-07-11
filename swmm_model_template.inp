@@ -111,7 +111,7 @@ v2               1                9                SIDE         0          $cd_v
 [WEIRS]
 ;;Name           From Node        To Node          Type         CrestHt    Qcoeff     Gated    EndCon   EndCoeff   Surcharge  RoadWidth  RoadSurf
 ;;-------------- ---------------- ---------------- ------------ ---------- ---------- -------- -------- ---------- ---------- ---------- ----------
-w1               s3               virt2            TRANSVERSE   $h_w1      $cd_w1       NO       0        0          YES
+w1               s3               virt2            TRANSVERSE   0.51       $cd_w1       NO       0        0          YES
 w3               v6               s5               TRANSVERSE   0          1.84       NO       0        0          YES
 w4               s2               virtual1         TRANSVERSE   2.73       1.84       NO       0        0          YES
 w2               virt3            s4               TRANSVERSE   0          1.84       NO       0        0          YES

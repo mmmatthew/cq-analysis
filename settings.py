@@ -21,59 +21,59 @@ class Settings(object):
         #     'rank': 0,
         #     'bounds': [0, 0.03]
         # },
-        'h_w1': {
-            "display_name": 'Height of weir w1',
-            'rank': 0,
-            'bounds': [0.4, 0.6]
-        },
+        # 'h_w1': {
+        #     "display_name": 'Height of weir w1',
+        #     'rank': 0,
+        #     'bounds': [0.4, 0.6]
+        # },
         'r_p3': {
             "display_name": 'Roughness (pipe p3)',
-            'rank': 1,
+            'rank': 0,
             'bounds': [0.009, 0.03]
         },
         'r_px': {
             "display_name": 'Roughness (other pipes)',
-            'rank': 2,
+            'rank': 1,
             'bounds': [0.005, 0.02]
         },
         'cd_m1': {
             "display_name": 'Discharge coefficient of manhole m1',
-            'rank': 3,
+            'rank': 2,
             'bounds': [0.48, 0.72]
         },
         'cd_m2': {
             "display_name": 'Discharge coefficient of manhole m2',
-            'rank': 4,
+            'rank': 3,
             'bounds': [0.42, 0.78]
         },
         'cd_m3': {
             "display_name": 'Discharge coefficient of manhole m3',
-            'rank': 5,
+            'rank': 4,
             'bounds': [0.42, 0.78]
         },
         'cd_r4': {
             "display_name": 'Discharge coefficient of outflow',
-            'rank': 6,
+            'rank': 5,
             'bounds': [0.1, 0.72]
         },
         'cd_r6': {
             "display_name": 'Discharge coefficient of outflow to basement',
-            'rank': 7,
+            'rank': 6,
             'bounds': [0.48, 0.72]
         },
         'cd_w1': {
             "display_name": 'Discharge coefficient of weir w1',
-            'rank': 8,
+            'rank': 7,
             'bounds': [1.1, 2.1]
         },
         'cd_v2': {
             "display_name": 'Discharge coefficient of valve v2',
-            'rank': 9,
+            'rank': 8,
             'bounds': [0.01, 0.5]
         },
         'seepage': {
             "display_name": 'Seepage loss from dam (mm/h)',
-            'rank': 10,
+            'rank': 9,
             'bounds': [0, 100]
         },
     }
