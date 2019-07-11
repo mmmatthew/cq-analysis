@@ -21,11 +21,11 @@ print('calibrating with {}'.format(calibrate_events))
 # event_identifiers = [20, 21]
 # locations_available = ['c3']
 locations_available = ['s3', 's5', 's6']
-data_types = ['trend', 'sensor']
+data_types = ['sensor', 'trend']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/new_model/ideal_sofi/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/new_model_190711/closed_pipes/'
 # define log file
 log_file = os.path.join(workdir, 'results.csv'.format(calibrate_events))
 if os.path.isfile(log_file) and overwrite:
@@ -39,7 +39,9 @@ for repetition in range(10):
         # make sure it is an integer
         event_number = int(event_number)
         # use different number of locations
-        for source_count in list(range(1, len(locations_available)+1)):
+        source_count_possibilities = list(range(1, len(locations_available)+1))
+        source_count_possibilities.reverse()
+        for source_count in source_count_possibilities:
             # use different combinations of locations
             for locations in list(itertools.combinations(locations_available, source_count)):
                 # use different types of data at each location
@@ -64,7 +66,7 @@ for repetition in range(10):
                         print('Processing already performed')
                         continue
 
-                    # create new settingss
+                    # create new settings
                     s = settings.Settings
 
                     # adapt settings
@@ -83,7 +85,7 @@ for repetition in range(10):
                             'count_sensor': types.count('sensor'),
                             'count_trend': types.count('trend'),
                             'repetition': repetition
-                        }, evaluation_count=1
+                        }, evaluation_count=1, experiment_name='-'.join(obses)
                     )
                     runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
                     # delete settings and runner
