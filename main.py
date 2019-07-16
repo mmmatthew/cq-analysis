@@ -25,9 +25,9 @@ data_types = ['sensor', 'trend']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/new_model_190711/fixed spearman threshold/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190712_less_params/'
 # define log file
-log_file = os.path.join(workdir, 'results.csv'.format(calibrate_events))
+log_file = os.path.join(workdir, 'results {}.csv'.format(' '.join(calibrate_events)))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
@@ -87,7 +87,7 @@ for repetition in range(10):
                             'repetition': repetition
                         }, evaluation_count=1, experiment_name='-'.join(obses)
                     )
-                    runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
+                    runner.run(repetitions=2000, kstop=5, ngs=7, pcento=0.5)
                     # delete settings and runner
                     del s
                     del runner

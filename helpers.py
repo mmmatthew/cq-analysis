@@ -14,7 +14,7 @@ def get_events(identifiers, metadata_path, initial_condition_path):
     initial_conditions = pd.read_csv(initial_condition_path, index_col=0)
 
     # use rules to set certain initial conditions
-    initial_conditions['id_1'] = initial_conditions.id_m2 + 0.21
+    # initial_conditions['id_1'] = initial_conditions.id_m2 + 0.21
     initial_conditions['id_v9'] = initial_conditions.id_s5
     initial_conditions['id_4'] = initial_conditions.id_s5 + 0.68
     initial_conditions['id_9'] = initial_conditions.id_s5 + 0.68
