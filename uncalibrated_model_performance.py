@@ -15,7 +15,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/_temp/190403_b'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190712_less_params'
 # define log file
 log_file = os.path.join(workdir, 'results_uncalibrated.csv')
 if os.path.isfile(log_file) and overwrite:
@@ -62,7 +62,8 @@ for event_number in event_identifiers:
             'observations': 'uncalibrated',
             'source_count': 0,
             'count_sensor': 0,
-            'count_trend': 0
+            'count_trend': 0,
+            'repetition': 0
         })
     runner.evaluate_uncalibrated(count=100)
     # delete settings and runner
