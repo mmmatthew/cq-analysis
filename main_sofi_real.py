@@ -9,14 +9,21 @@ import settings
 overwrite = False
 event_identifiers = [20, 21, 22, 23, 24]
 
+# Find out which events to calibrate
+if len(sys.argv) > 1:
+    calibrate_events = sys.argv[1:]
+else:
+    calibrate_events = event_identifiers
+print('calibrating with {}'.format(calibrate_events))
+
 locations_available = ['s3', 's5', 's6']
 data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/gaussiantrend/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190819_real calibration params/'
 # define log file
-log_file = os.path.join(workdir, 'results.csv')
+log_file = os.path.join(workdir, 'results sofi {}.csv'.format(' '.join(calibrate_events)))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
@@ -26,10 +33,10 @@ events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadat
 for repetition in range(10):
     for quality in [.6, .7, .8, .9]:
 
-        sofi_obs_name = 's3_gaussiantrend_{}'.format(quality)
+        sofi_obs_name = 's3_sofi_{}'.format(quality)
 
-        for obses, types in zip([[sofi_obs_name, 's5_sensor'], [sofi_obs_name]], [['gaussiantrend', 'sensor'], ['gaussiantrend']]):
-            for event_number in [20, 21, 22, 23, 24]:
+        for obses, types in zip([[sofi_obs_name, 's6_sensor'], [sofi_obs_name]], [['sofi', 'sensor'], ['sofi']]):
+            for event_number in [20]:
                 source_count = len(obses)
 
                 # define calibration event
@@ -53,14 +60,16 @@ for repetition in range(10):
 
                 # create observation for specific sofi trend quality
                 s.obs_available[sofi_obs_name] = {
-                    "data_file": './data/hybrid/gaussian_hybrid_{}.txt'.format(quality),
+                    "data_file": './data/hybrid/sofi_hybrid_{}.txt'.format(quality),
                     "location": 's3',
                     "data_type": 'trend',
                     "scale_factor": 1,
                     "swmm_node": ['node', 's3', 'Depth_above_invert'],
                     "calibration": {
                         "obj_fun": 'spearman_zero',
-                        "weight": -0.5
+                        "weight": -0.5,
+                "zero_threshold_obs": 0.02,  # for spearman zero obj_fun, we define a
+                "zero_threshold_sim": 0.02
                     }
                 }
 
@@ -78,11 +87,11 @@ for repetition in range(10):
                         'observations': '-'.join(obses),
                         'source_count': source_count,
                         'count_sensor': types.count('sensor'),
-                        'count_trend': types.count('trend') + types.count('gaussiantrend'),
+                        'count_trend': types.count('trend') + types.count('sofi'),
                         'repetition': repetition
-                    }, evaluation_count=1
+                    }, evaluation_count=1, experiment_name='-'.join(obses)
                 )
-                runner.run(repetitions=2000, kstop=8, ngs=3, pcento=0.5)
+                runner.run(repetitions=2000, kstop=5, ngs=7, pcento=0.5)
                 # delete settings and runner
                 del s
                 del runner
