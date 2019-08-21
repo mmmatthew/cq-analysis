@@ -7,7 +7,7 @@ import helpers as h
 import settings
 
 overwrite = False
-event_identifiers = [20, 21, 22, 23, 24]
+event_identifiers = list(map(str, [20, 21, 22, 23, 24]))
 
 # Find out which events to calibrate
 if len(sys.argv) > 1:
@@ -21,22 +21,22 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190819_real calibration params/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190821/'
 # define log file
 log_file = os.path.join(workdir, 'results sofi {}.csv'.format(' '.join(calibrate_events)))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
 
-events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
+events = h.get_events(identifiers=calibrate_events, metadata_path=event_metadata, initial_condition_path=ic_path)
 
 for repetition in range(10):
     for quality in [.6, .7, .8, .9]:
 
         sofi_obs_name = 's3_sofi_{}'.format(quality)
 
-        for obses, types in zip([[sofi_obs_name, 's6_sensor'], [sofi_obs_name]], [['sofi', 'sensor'], ['sofi']]):
-            for event_number in [20]:
+        for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['sofi', 'trend'], ['sofi']]):
+            for event_number in calibrate_events:
                 source_count = len(obses)
 
                 # define calibration event
@@ -91,7 +91,7 @@ for repetition in range(10):
                         'repetition': repetition
                     }, evaluation_count=1, experiment_name='-'.join(obses)
                 )
-                runner.run(repetitions=2000, kstop=5, ngs=7, pcento=0.5)
+                runner.run(repetitions=2000, kstop=8, ngs=7, pcento=0.5)
                 # delete settings and runner
                 del s
                 del runner
