@@ -23,20 +23,20 @@ ic_path = 'data/initial_conditions.csv'
 
 workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190821/'
 # define log file
-log_file = os.path.join(workdir, 'results sofi {}.csv'.format(' '.join(map(str, calibrate_events))))
+log_file = os.path.join(workdir, 'results gaussian {}.csv'.format(' '.join(map(str, calibrate_events))))
 if os.path.isfile(log_file) and overwrite:
     print('removing last results')
     os.remove(log_file)
 
-events = h.get_events(identifiers=calibrate_events, metadata_path=event_metadata, initial_condition_path=ic_path)
+events = h.get_events(identifiers=event_identifiers, metadata_path=event_metadata, initial_condition_path=ic_path)
 
 for repetition in range(10):
     for quality in [.6, .7, .8, .9]:
 
-        sofi_obs_name = 's3_sofi_{}'.format(quality)
+        sofi_obs_name = 's3_gaussiantrend_{}'.format(quality)
 
-        for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['sofi', 'trend'], ['sofi']]):
-            for event_number in [20]:  #calibrate_events:
+        for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['gaussiantrend', 'trend'], ['gaussiantrend']]):
+            for event_number in [20]:
                 source_count = len(obses)
 
                 # define calibration event
@@ -60,7 +60,7 @@ for repetition in range(10):
 
                 # create observation for specific sofi trend quality
                 s.obs_available[sofi_obs_name] = {
-                    "data_file": './data/hybrid/sofi_hybrid_{}.txt'.format(quality),
+                    "data_file": './data/hybrid/gaussian_hybrid_{}.txt'.format(quality),
                     "location": 's3',
                     "data_type": 'trend',
                     "scale_factor": 1,
@@ -87,7 +87,7 @@ for repetition in range(10):
                         'observations': '-'.join(obses),
                         'source_count': source_count,
                         'count_sensor': types.count('sensor'),
-                        'count_trend': types.count('trend') + types.count('sofi'),
+                        'count_trend': types.count('trend') + types.count('gaussiantrend'),
                         'repetition': repetition
                     }, evaluation_count=1, experiment_name='-'.join(obses)
                 )
