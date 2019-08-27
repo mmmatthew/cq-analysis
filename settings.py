@@ -100,7 +100,7 @@ class Settings(object):
             "scale_factor": 1,
             "swmm_node": ['node', 's6', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman_zero',
+                "obj_fun": 'spearman_simple_zero',
                 "weight": -0.5,
                 "zero_threshold_obs": 0.02,  # for spearman zero obj_fun, we define a
                 "zero_threshold_sim": 0.02  # threshold below which the data and model are considered zero
@@ -114,7 +114,7 @@ class Settings(object):
             "scale_factor": 1,
             "swmm_node": ['node', 's5', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman_zero',
+                "obj_fun": 'spearman_simple_zero',
                 "weight": -0.5,
                 "zero_threshold_obs": 0.02,  # for spearman zero obj_fun, we define a
                 "zero_threshold_sim": 0.02  # threshold below which the data and model are considered zero
@@ -128,7 +128,7 @@ class Settings(object):
             "scale_factor": 1,
             "swmm_node": ['node', 's3', 'Depth_above_invert'],
             "calibration": {
-                "obj_fun": 'spearman_zero',
+                "obj_fun": 'spearman_simple_zero',
                 "weight": -0.5,
                 "zero_threshold_obs": 0.02,  # for spearman zero obj_fun, we define a
                 "zero_threshold_sim": 0.02  # threshold below which the data and model are considered zero
