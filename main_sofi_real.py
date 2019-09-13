@@ -21,7 +21,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190827_simple_spearman/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190913_update_hybrid/'
 # define log file
 log_file = os.path.join(workdir, 'results sofi {}.csv'.format(' '.join(map(str, calibrate_events))))
 if os.path.isfile(log_file) and overwrite:
@@ -36,7 +36,7 @@ for repetition in range(10):
         sofi_obs_name = 's3_sofi_{}'.format(quality)
 
         for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['sofi', 'trend'], ['sofi']]):
-            for event_number in [22, 23, 24]:  #calibrate_events:
+            for event_number in [20]:  #calibrate_events:
                 source_count = len(obses)
 
                 # define calibration event
@@ -60,7 +60,7 @@ for repetition in range(10):
 
                 # create observation for specific sofi trend quality
                 s.obs_available[sofi_obs_name] = {
-                    "data_file": './data/hybrid/sofi_hybrid_{}.txt'.format(quality),
+                    "data_file": './data/hybrid_new/sofi_hybrid_c{}.txt'.format(quality),
                     "location": 's3',
                     "data_type": 'trend',
                     "scale_factor": 1,
