@@ -43,7 +43,7 @@ def find_combination(combined, obj_correlation):
     def f2minimize(x): return np.abs(merge_and_evaluate(x)[0] - obj_correlation)
 
     # minimization
-    result = minimize(f2minimize, np.array([0.9]), method='Nelder-Mead', bounds=[(0, 1)], tol=0.01,
+    result = minimize(f2minimize, np.array([0.9]), method='Nelder-Mead', bounds=[(-1, 1)], tol=0.001,
                       # callback=lambda x: print('value: {}'.format(x)),
                       options={'disp': True})
     if result.success:
@@ -76,7 +76,7 @@ for objective_correlation in obj_correlations:
         temp = combined.loc[
                 (combined.index <= experiments.loc[i_exp, 'end_datetime']) &
                 (combined.index >= experiments.loc[i_exp, 'start_datetime'])]
-        print('searching for series for event {} and correlation'.format(i_exp, objective_correlation))
+        print('searching for series for event {} and correlation{}'.format(i_exp, objective_correlation))
         data = find_combination(temp, objective_correlation)
         if data_all is None:
             data_all = data
