@@ -6,18 +6,23 @@ import matplotlib.pyplot as plt
 
 
 # creates function to optimize
-def create_merge_function(trend_path, sofi_path):
+def load_data(trend_path, noisy_path):
     # Load data
     trend = pd.read_csv(trend_path, sep=';', index_col=0, parse_dates=['datetime'], dayfirst=True)
-    sofi = pd.read_csv(sofi_path, sep=';', index_col=0, parse_dates=['datetime'], dayfirst=True)
+    noisy = pd.read_csv(noisy_path, sep=';', index_col=0, parse_dates=['datetime'], dayfirst=True)
 
     # aggregate by second
     trend = trend.resample('S').mean()
 
     # normalize both so that combination works better
-    trend.value = trend.value/trend.value.max()
-    sofi.value = sofi.value/sofi.value.max()
-    combined = sofi.join(trend, how='inner', lsuffix='_sofi', rsuffix='_trend')
+    trend.value = trend.value / trend.value.max()
+    noisy.value = noisy.value / noisy.value.max()
+
+    combined = noisy.join(trend, how='inner', lsuffix='_sofi', rsuffix='_trend')
+
+    return combined
+
+def create_merge_function(combined):
 
     def merge_and_evaluate(sofi_fraction):
         # create or edit merged data
@@ -30,9 +35,9 @@ def create_merge_function(trend_path, sofi_path):
     return merge_and_evaluate
 
 
-def find_combination(trend_path, sofi_path, obj_correlation):
+def find_combination(combined, obj_correlation):
     # create function to merge data and estimate correlation
-    merge_and_evaluate = create_merge_function(trend_path, sofi_path)
+    merge_and_evaluate = create_merge_function(combined)
 
     # function to minimize
     def f2minimize(x): return np.abs(merge_and_evaluate(x)[0] - obj_correlation)
@@ -48,26 +53,33 @@ def find_combination(trend_path, sofi_path, obj_correlation):
         print('minimization failed')
         return False
 
-
+experiment_path = './data/experiment_list.csv'
 trend_path_real = './data/all_s3_h_us_maxbotix_normalized.txt'
 sofi_path_real = './data/161006A_s3_sofi.txt'
 random_path = './data/hybrid/random_gaussian_E20.txt'
-template_out_real_path = './data/hybrid/sofi_hybrid_{}.txt'
-template_out_random_path = './data/hybrid/gaussian_hybrid_{}.txt'
+template_out_real_path = './data/hybrid_new/sofi_hybrid_c{}.txt'
+template_out_random_path = './data/hybrid_new/gaussian_hybrid_c{}.txt'
 obj_correlations = [.6, .7, .8, .9]
 
-# Create noisy data with real trend
-# for objective_correlation in obj_correlations:
-#     data = find_combination(trend_path_real, sofi_path_real, objective_correlation)
-#     # fig = data.plot(title='{}% correlation'.format(objective_correlation))
-#     # plt.show()
-#     # save data
-#     data['value'].to_csv(template_out_real_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
 
-#Create noisy data with random noise
+# Load data
+combined = load_data(trend_path_real, sofi_path_real)
+
+# Load experiments
+experiments = pd.read_csv(experiment_path, sep=';', index_col=0, parse_dates=['start_datetime', 'end_datetime'], dayfirst=True)
+
+# Loop through experiments 20-24 and get data for each
+
 for objective_correlation in obj_correlations:
-    data = find_combination(trend_path_real, random_path, objective_correlation)
-    # fig = data.plot(title='{}% correlation'.format(objective_correlation))
-    # plt.show()
-    # save data
-    data['value'].to_csv(template_out_random_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
+    data_all = None
+    for i_exp in range(20, 25):
+        temp = combined.loc[
+                (combined.index <= experiments.loc[i_exp, 'end_datetime']) &
+                (combined.index >= experiments.loc[i_exp, 'start_datetime'])]
+        print('searching for series for event {} and correlation'.format(i_exp, objective_correlation))
+        data = find_combination(temp, objective_correlation)
+        if data_all is None:
+            data_all = data
+        else:
+            data_all = data_all.append(data)
+    data_all['value'].to_csv(template_out_real_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')

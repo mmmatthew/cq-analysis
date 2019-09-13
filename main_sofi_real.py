@@ -21,7 +21,7 @@ data_types = ['trend', 'sensor']
 event_metadata = 'data/experiment_list.csv'
 ic_path = 'data/initial_conditions.csv'
 
-workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190821/'
+workdir = 'Q:/Messdaten/floodVisionData/core_2018_cq/4_experiments/CliBU008/simple_model/190827_simple_spearman/'
 # define log file
 log_file = os.path.join(workdir, 'results sofi {}.csv'.format(' '.join(map(str, calibrate_events))))
 if os.path.isfile(log_file) and overwrite:
@@ -36,7 +36,7 @@ for repetition in range(10):
         sofi_obs_name = 's3_sofi_{}'.format(quality)
 
         for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['sofi', 'trend'], ['sofi']]):
-            for event_number in [20]:  #calibrate_events:
+            for event_number in [22, 23, 24]:  #calibrate_events:
                 source_count = len(obses)
 
                 # define calibration event
@@ -66,7 +66,7 @@ for repetition in range(10):
                     "scale_factor": 1,
                     "swmm_node": ['node', 's3', 'Depth_above_invert'],
                     "calibration": {
-                        "obj_fun": 'spearman_zero',
+                        "obj_fun": 'spearman_simple_zero',
                         "weight": -0.5,
                 "zero_threshold_obs": 0.02,  # for spearman zero obj_fun, we define a
                 "zero_threshold_sim": 0.02
