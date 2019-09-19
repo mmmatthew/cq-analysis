@@ -36,7 +36,7 @@ for repetition in range(10):
         sofi_obs_name = 's3_sofi_{}'.format(quality)
 
         for obses, types in zip([[sofi_obs_name, 's6_trend'], [sofi_obs_name]], [['sofi', 'trend'], ['sofi']]):
-            for event_number in [20]:  #calibrate_events:
+            for event_number in [23, 24]:  #calibrate_events:
                 source_count = len(obses)
 
                 # define calibration event
