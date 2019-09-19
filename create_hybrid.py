@@ -35,7 +35,10 @@ def create_merge_function(combined):
     return merge_and_evaluate
 
 
-def find_combination(combined, obj_correlation):
+def find_combination(combined, obj_correlation, freq='5S'):
+    # first sample data to desired frequency
+    combined = combined.resample(freq).mean()
+
     # create function to merge data and estimate correlation
     merge_and_evaluate = create_merge_function(combined)
 
@@ -63,7 +66,7 @@ obj_correlations = [.6, .7, .8, .9]
 
 
 # Load data
-combined = load_data(trend_path_real, sofi_path_real)
+combined = load_data(trend_path_real, random_path)
 
 # Load experiments
 experiments = pd.read_csv(experiment_path, sep=';', index_col=0, parse_dates=['start_datetime', 'end_datetime'], dayfirst=True)
@@ -77,9 +80,9 @@ for objective_correlation in obj_correlations:
                 (combined.index <= experiments.loc[i_exp, 'end_datetime']) &
                 (combined.index >= experiments.loc[i_exp, 'start_datetime'])]
         print('searching for series for event {} and correlation{}'.format(i_exp, objective_correlation))
-        data = find_combination(temp, objective_correlation)
+        data = find_combination(temp, objective_correlation, freq='5S')
         if data_all is None:
             data_all = data
         else:
             data_all = data_all.append(data)
-    data_all['value'].to_csv(template_out_real_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
+    data_all['value'].to_csv(template_out_random_path.format(objective_correlation), sep=';', header=True, date_format='%d/%m/%Y %H:%M:%S')
